@@ -6,8 +6,8 @@ export default function GradeTable(props) {
     return <Grade name={student.name} course={student.course} grade={student.grade} key={student.id}/>;
   });
   return (
-    <table className="table">
-      <thead>
+    <table className="table table-striped">
+      <thead className="thead-dark">
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Course</th>
