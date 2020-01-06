@@ -24,10 +24,10 @@ class App extends React.Component {
   }
 
   getAverageGrade() {
-    const arrayOfGrades = this.state.grades.map(grades => {
-      return grades.grade;
+    const arrayOfGrades = this.state.grades.map(studentGrades => {
+      return studentGrades.grade;
     });
-    if (arrayOfGrades) {
+    if (arrayOfGrades.length > 0) {
       return Math.round(arrayOfGrades.reduce((a, b) => a + b, 0) / arrayOfGrades.length);
     } else {
       return 0;
