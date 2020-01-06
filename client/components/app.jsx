@@ -9,7 +9,7 @@ class App extends React.Component {
   }
 
   getNames() {
-    fetch('http://localhost:3000/api/grades')
+    fetch('/api/grades')
       .then(response => {
         return response.json();
       })
