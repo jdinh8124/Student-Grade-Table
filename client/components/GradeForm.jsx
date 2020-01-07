@@ -27,7 +27,7 @@ export default class GradeForm extends React.Component {
     this.setState({ grade: event.target.value });
   }
 
-  submitStudent() {
+  submitStudent(event) {
     if (this.state.name === '' || this.state.course === '' || this.state.grade === '') {
       return;
     }
@@ -40,13 +40,13 @@ export default class GradeForm extends React.Component {
     this.setState(previousState => ({ name: '', course: '', grade: '' }));
   }
 
-  resetForm() {
+  resetForm(event) {
     this.setState(previousState => ({ name: '', course: '', grade: '' }));
   }
 
   render() {
     return (
-      <form className="ml-5  ">
+      <form className="ml-xl-5 ml-lg-5" onSubmit={this.submitStudent} onReset={this.resetForm}>
         <div>
           <div className="input-group mb-3 ">
             <div className="input-group-prepend">
@@ -69,8 +69,8 @@ export default class GradeForm extends React.Component {
             </div>
           </div>
         </div>
-        <button className="btn btn-success ml-2" onClick={this.submitStudent}>Submit</button>
-        <button className="btn btn-secondary  ml-2" onClick={this.resetForm}>Reset</button>
+        <button className="btn btn-success ml-2" type="submit">Submit</button>
+        <button className="btn btn-secondary  ml-2" type="reset">Reset</button>
       </form>
     );
   }

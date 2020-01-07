@@ -85,9 +85,9 @@ class App extends React.Component {
   render() {
     const average = this.getAverageGrade();
     return (
-      <div className="m-4 container-fluid ">
+      <div className="m-4 container-fluid  ">
         <Header text="Student Grade Table" grade={average}/>
-        <div className=" row container-fluid ">
+        <div className=" row container-fluid justify-content-center ">
           <GradeTable grades={this.state.grades} remove={this.deleteNames} />
           <GradeForm submit={this.addNames} />
         </div>
