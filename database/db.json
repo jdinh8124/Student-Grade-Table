@@ -1,22 +1,3 @@
 {
-  "grades": [
-    {
-      "name": "James",
-      "course": "History",
-      "grade": 1,
-      "id": 1
-    },
-    {
-      "name": "James Dinh",
-      "course": "Coding",
-      "grade": 98,
-      "id": 2
-    },
-    {
-      "name": "Mike",
-      "course": "Reading",
-      "grade": 100,
-      "id": 3
-    }
-  ]
+  "grades": []
 }

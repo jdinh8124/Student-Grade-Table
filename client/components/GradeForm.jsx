@@ -38,37 +38,34 @@ export default class GradeForm extends React.Component {
     };
     this.props.submit(objectToSubmit);
     this.setState(previousState => ({ name: '', course: '', grade: '' }));
-    document.getElementById('entireForm').reset();
   }
 
   resetForm() {
     this.setState(previousState => ({ name: '', course: '', grade: '' }));
-    document.getElementById('entireForm').reset();
   }
 
   render() {
     return (
-      <form className="ml-5">
+      <form className="ml-5  ">
         <div>
-
-          <div className="input-group mb-3">
+          <div className="input-group mb-3 ">
             <div className="input-group-prepend">
               <span className="input-group-text" ><i className="fas fa-user "></i></span>
             </div>
-            <input type="name" className="border-2" onChange={this.handleNameChange} placeholder="Name" />
+            <input type="text" className="border-2 form-control" onChange={this.handleNameChange} placeholder="Name" />
           </div>
 
           <div className="input-group mb-3">
             <div className="input-group-prepend"></div>
             <span className="input-group-text" ><i className="far fa-list-alt"></i></span>
-            <input type="name" className="border-2" onChange={this.handleCourseChange} placeholder="Course" />
+            <input type="text" className="border-2 form-control" onChange={this.handleCourseChange} placeholder="Course" />
           </div>
 
           <div className="input-group mb-3">
             <div className="input-group-prepend">
               <span className="input-group-text" ><i className="fas fa-graduation-cap"></i>
               </span>
-              <input type="name" className="border-2" onChange={this.handleGradeChange} placeholder="Grade" />
+              <input type="text" className="border-2 form-control" onChange={this.handleGradeChange} placeholder="Grade" />
             </div>
           </div>
         </div>
