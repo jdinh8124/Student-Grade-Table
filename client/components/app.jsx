@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
 import GradeTable from './gradeTable';
+import GradeForm from './gradeForm';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +17,29 @@ class App extends React.Component {
       .then(myJson => {
         this.setState(previousState => ({
           grades: myJson
+        }));
+      })
+      .catch(reason => {
+        console.error(reason.message);
+      });
+  }
+
+  addNames(newStudent) {
+    fetch('/api/grades', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newStudent)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(myJson => {
+        const newArray = [...this.state.grades];
+        newArray.push(myJson);
+        this.setState(previousState => ({
+          grades: newArray
         }));
       })
       .catch(reason => {
@@ -43,7 +67,10 @@ class App extends React.Component {
     return (
       <div className="m-4">
         <Header text="Student Grade Table" grade={average}/>
-        <GradeTable grades={this.state.grades} />
+        <div className="d-flex">
+          <GradeTable grades={this.state.grades} />
+          <GradeForm submit={this.addNames} />
+        </div>
       </div>
     );
   }

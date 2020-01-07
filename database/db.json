@@ -17,6 +17,24 @@
       "name": "Douglas Crockford",
       "course": "JavaScript",
       "grade": 100
+    },
+    {
+      "name": "James Dinh",
+      "course": "History",
+      "grade": 5,
+      "id": 4
+    },
+    {
+      "name": "Mark",
+      "course": "Speech",
+      "grade": 100,
+      "id": 5
+    },
+    {
+      "name": "John D",
+      "course": "Code",
+      "grade": 88,
+      "id": 6
     }
   ]
 }
