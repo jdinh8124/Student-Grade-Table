@@ -3,7 +3,7 @@ import Grade from './grade';
 
 export default function GradeTable(props) {
   const elements = props.grades.map(student => {
-    return <Grade name={student.name} course={student.course} grade={student.grade} key={student.id} buttonClick={student.click}/>;
+    return <Grade name={student.name} course={student.course} grade={student.grade} key={student.id} id={student.id} buttonClick={props.remove}/>;
   });
   return (
     <table className="table table-striped w-75">
