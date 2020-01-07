@@ -1,40 +1,34 @@
 {
   "grades": [
     {
-      "id": 1,
-      "name": "Kyle Simpson",
-      "course": "JavaScript",
-      "grade": 100
+      "name": "John",
+      "course": "Football",
+      "grade": 10,
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Brendan Eich",
-      "course": "JavaScript",
-      "grade": 100
+      "name": "Eric",
+      "course": "Eating",
+      "grade": 100,
+      "id": 2
     },
     {
-      "id": 3,
-      "name": "Douglas Crockford",
-      "course": "JavaScript",
-      "grade": 100
+      "name": "Zoe",
+      "course": "Baking",
+      "grade": 55,
+      "id": 3
     },
     {
-      "name": "James Dinh",
-      "course": "History",
-      "grade": 5,
+      "name": "Laura",
+      "course": "Foods",
+      "grade": 100,
       "id": 4
     },
     {
-      "name": "Mark",
-      "course": "Speech",
+      "name": "Mike",
+      "course": "Lunch",
       "grade": 100,
       "id": 5
-    },
-    {
-      "name": "John D",
-      "course": "Code",
-      "grade": 88,
-      "id": 6
     }
   ]
 }
