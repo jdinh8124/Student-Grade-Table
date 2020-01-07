@@ -74,7 +74,7 @@ class App extends React.Component {
     if (arrayOfGrades.length > 0) {
       return Math.round(arrayOfGrades.reduce((a, b) => a + b, 0) / arrayOfGrades.length);
     } else {
-      return 0;
+      return 'N/A';
     }
   }
 
