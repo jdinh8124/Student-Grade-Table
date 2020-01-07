@@ -27,7 +27,7 @@ export default class GradeForm extends React.Component {
     this.setState({ grade: event.target.value });
   }
 
-  submitStudent() {
+  submitStudent(event) {
     if (this.state.name === '' || this.state.course === '' || this.state.grade === '') {
       return;
     }
@@ -38,42 +38,39 @@ export default class GradeForm extends React.Component {
     };
     this.props.submit(objectToSubmit);
     this.setState(previousState => ({ name: '', course: '', grade: '' }));
-    document.getElementById('entireForm').reset();
   }
 
-  resetForm() {
+  resetForm(event) {
     this.setState(previousState => ({ name: '', course: '', grade: '' }));
-    document.getElementById('entireForm').reset();
   }
 
   render() {
     return (
-      <form className="ml-5">
+      <form className="ml-xl-5 ml-lg-5" onSubmit={this.submitStudent} onReset={this.resetForm}>
         <div>
-
-          <div className="input-group mb-3">
+          <div className="input-group mb-3 ">
             <div className="input-group-prepend">
               <span className="input-group-text" ><i className="fas fa-user "></i></span>
             </div>
-            <input type="name" className="border-2" onChange={this.handleNameChange} placeholder="Name" />
+            <input type="text" className="border-2 form-control" onChange={this.handleNameChange} placeholder="Name" />
           </div>
 
           <div className="input-group mb-3">
             <div className="input-group-prepend"></div>
             <span className="input-group-text" ><i className="far fa-list-alt"></i></span>
-            <input type="name" className="border-2" onChange={this.handleCourseChange} placeholder="Course" />
+            <input type="text" className="border-2 form-control" onChange={this.handleCourseChange} placeholder="Course" />
           </div>
 
           <div className="input-group mb-3">
             <div className="input-group-prepend">
               <span className="input-group-text" ><i className="fas fa-graduation-cap"></i>
               </span>
-              <input type="name" className="border-2" onChange={this.handleGradeChange} placeholder="Grade" />
+              <input type="text" className="border-2 form-control" onChange={this.handleGradeChange} placeholder="Grade" />
             </div>
           </div>
         </div>
-        <button className="btn btn-success ml-2" onClick={this.submitStudent}>Submit</button>
-        <button className="btn btn-secondary  ml-2" onClick={this.resetForm}>Reset</button>
+        <button className="btn btn-success ml-2" type="submit">Submit</button>
+        <button className="btn btn-secondary  ml-2" type="reset">Reset</button>
       </form>
     );
   }
