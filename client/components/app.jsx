@@ -23,14 +23,26 @@ class App extends React.Component {
       });
   }
 
+  getAverageGrade() {
+    const arrayOfGrades = this.state.grades.map(studentGrades => {
+      return studentGrades.grade;
+    });
+    if (arrayOfGrades.length > 0) {
+      return Math.round(arrayOfGrades.reduce((a, b) => a + b, 0) / arrayOfGrades.length);
+    } else {
+      return 0;
+    }
+  }
+
   componentDidMount() {
     this.getNames();
   }
 
   render() {
+    const average = this.getAverageGrade();
     return (
       <div className="m-4">
-        <Header text="Student Grade Table" />,
+        <Header text="Student Grade Table" grade={average}/>
         <GradeTable grades={this.state.grades} />
       </div>
     );
