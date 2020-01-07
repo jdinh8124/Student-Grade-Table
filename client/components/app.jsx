@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { grades: [] };
-
+    this.deleteNames = this.deleteNames.bind(this);
   }
 
   getNames() {
@@ -48,12 +48,8 @@ class App extends React.Component {
   }
 
   deleteNames(id) {
-    fetch('/api/grades/:id', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(id)
+    fetch(`/api/grades/${id}`, {
+      method: 'DELETE'
     })
       .then(response => {
         return response.json();
@@ -61,9 +57,9 @@ class App extends React.Component {
       .then(myJson => {
         const newArray = [...this.state.grades];
         const indexMatch = newArray.findIndex(object => object.id === id);
-        const arrayForState = newArray.splice(indexMatch, 1);
+        newArray.splice(indexMatch, 1);
         this.setState(previousState => ({
-          grades: arrayForState
+          grades: newArray
         }));
       })
       .catch(reason => {
