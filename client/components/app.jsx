@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   addNames(student, changes) {
-    if (!changes || changes === undefined) {
+    if (!changes) {
       fetch('/api/grades', {
         method: 'POST',
         headers: {
@@ -54,7 +54,7 @@ class App extends React.Component {
       fetch(`/api/grades/${student.id}`, {
         method: 'PUT',
         headers: {
-          'Content-type': 'application/json; charset=UTF-8'
+          'Content-type': 'application/json'
         },
         body: JSON.stringify(student)
       })
@@ -97,31 +97,10 @@ class App extends React.Component {
 
   updateNames(id) {
     const foundObj = this.state.grades.find(object => object.id === id);
-    this.setState({ objToPass: foundObj });
+    this.setState({
+      objToPass: foundObj
+    });
   }
-
-  // fetch(`/api/grades/${id}`, {
-  //   method: 'PUT',
-  //   headers: {
-  //     'Content-type': 'application/json; charset=UTF-8'
-  //   },
-  //   body: JSON.stringify(id)
-  // })
-  //     .then(response => {
-  //   return response.json();
-  // })
-  // .then(myJson => {
-  //   const newArray = [...this.state.grades];
-  //   newArray.push(myJson);
-  //   const indexMatch = newArray.findIndex(object => object.id === id);
-  //   newArray[indexMatch] = myJson;
-  //   this.setState(previousState => ({
-  //     grades: newArray
-  //   }));
-  // })
-  // .catch(reason => {
-  //   console.error(reason.message);
-  // });
 
   getAverageGrade() {
     const arrayOfGrades = this.state.grades.map(studentGrades => {
@@ -141,7 +120,7 @@ class App extends React.Component {
   render() {
     const average = this.getAverageGrade();
     return (
-      <div className="m-4 container-fluid  ">
+      <div className="m-5 container-fluid ">
         <Header text="Student Grade Table" grade={average}/>
         <div className=" row container-fluid justify-content-center ">
           <GradeTable grades={this.state.grades} remove={this.deleteNames} update={this.updateNames} />
