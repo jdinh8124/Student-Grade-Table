@@ -4,15 +4,25 @@ border-style:solid!important;
  border-color: black!important;
 }
 
-@media only screen and (max-width: 1868px){
-  .fontInBetween{
-  font-size: 25px;
+@media only screen and (max-width: 1270px){
+  .titleFont{
+  font-size: 35px;
+
   }
 }
+
+@media only screen and (max-width: 1185px){
+  .titleFont{
+  font-size: 45px;
+
+  }
+}
+
 
 @media only screen and (max-width: 1538px){
   .fontInBetween{
   font-size: 29px;
+
   }
 }
 
