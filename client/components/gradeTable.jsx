@@ -2,14 +2,9 @@ import React from 'react';
 import Grade from './grade';
 
 export default function GradeTable(props) {
-  let elements;
-  if (props.grades.length > 0) {
-    elements = <tr><td><div className="h2">No Grades Were Record</div></td></tr>;
-  } else {
-    elements = props.grades.map(student => {
-      return <Grade name={student.name} course={student.course} grade={student.grade} key={student.id} id={student.id} buttonClick={props.remove}/>;
-    });
-  }
+  const elements = props.grades.map(student => {
+    return <Grade name={student.name} course={student.course} grade={student.grade} key={student.id} id={student.id} buttonClick={props.remove} updateClick={props.update}/>;
+  });
   return (
     <table className="table table-striped w-75">
       <thead className="thead-dark">

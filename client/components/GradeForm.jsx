@@ -6,13 +6,28 @@ export default class GradeForm extends React.Component {
     this.state = {
       name: '',
       course: '',
-      grade: ''
+      grade: '',
+      update: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCourseChange = this.handleCourseChange.bind(this);
     this.handleGradeChange = this.handleGradeChange.bind(this);
     this.submitStudent = this.submitStudent.bind(this);
     this.resetForm = this.resetForm.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.foundObj !== prevProps.foundObj) {
+      const name = this.props.foundObj.name;
+      const course = this.props.foundObj.course;
+      const grade = this.props.foundObj.grade;
+      this.setState(previousState => ({
+        name: name,
+        course: course,
+        grade: grade,
+        update: true
+      }));
+    }
   }
 
   handleNameChange(event) {
@@ -31,13 +46,24 @@ export default class GradeForm extends React.Component {
     if (this.state.name === '' || this.state.course === '' || this.state.grade === '') {
       return;
     }
-    const objectToSubmit = {
-      name: this.state.name,
-      course: this.state.course,
-      grade: parseInt(this.state.grade)
-    };
-    this.props.submit(objectToSubmit);
-    this.setState(previousState => ({ name: '', course: '', grade: '' }));
+    if (this.state.update) {
+      const objectToSubmit = {
+        name: this.state.name,
+        course: this.state.course,
+        grade: parseInt(this.state.grade)
+      };
+      this.props.submit(objectToSubmit, this.state.update);
+      this.setState(previousState => ({ name: '', course: '', grade: '' }));
+    } else {
+      const objectToSubmit = {
+        name: this.state.name,
+        course: this.state.course,
+        grade: parseInt(this.state.grade)
+      };
+      this.props.submit(objectToSubmit, this.state.update);
+      this.setState(previousState => ({ name: '', course: '', grade: '' }));
+    }
+
   }
 
   resetForm(event) {
