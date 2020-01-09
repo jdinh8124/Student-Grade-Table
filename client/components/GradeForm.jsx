@@ -27,7 +27,7 @@ export default class GradeForm extends React.Component {
         name: name,
         course: course,
         grade: grade,
-        id,
+        id: id,
         update: true
       });
     }
@@ -46,6 +46,7 @@ export default class GradeForm extends React.Component {
   }
 
   submitStudent(event) {
+    event.preventDefault();
     if (this.state.name === '' || this.state.course === '' || this.state.grade === '') {
       return;
     }
@@ -71,6 +72,7 @@ export default class GradeForm extends React.Component {
   }
 
   resetForm(event) {
+    event.preventDefault();
     this.setState(previousState => ({ name: '', course: '', grade: '', update: false }));
   }
 
