@@ -1,24 +1,14 @@
-// const path = require('path');
+const path = require('path');
 // const jsonServer = require('json-server');
 const express = require('express');
 const data = require('../database/data.json');
 const fs = require('fs');
 const app = express();
-app.use(express.json());
 
-// var router = express.Router();
-// const dbPath = path.resolve(__dirname, '../database/data.json');
-// const filePath = express.static(path.join(__dirname, '/public'));
-// // const server = jsonServer.create();
-// const middleware = jsonServer.defaults();
-// const endpoints = jsonServer.router(dbPath);
-// app.use('/api', endpoints);
-// server.use(middleware);
-// server.use('/api', endpoints);
-// server.listen(3001, () => {
-//   // eslint-disable-next-line no-console
-//   console.log('JSON Server listening on port 3001\n');
-// });
+const dbPath = path.resolve(__dirname, '../database/data.json');
+const filePath = express.static(path.join(__dirname, '/public'));
+
+app.use(express.json(), filePath);
 
 app.get('/api/grades/', (req, res) => {
   const grades = data.grades;
@@ -33,13 +23,13 @@ app.post('/api/grades/', (req, res) => {
     const objToPush = {
       name: req.body.name,
       course: req.body.course,
-      grade: req.body.grade,
+      grade: parseInt(req.body.grade),
       id: data.nextId
     };
     data.grades.push(objToPush);
     const jsonSend = JSON.stringify(data, null, 2);
     data.nextId++;
-    fs.writeFile('../database/data.json', jsonSend, 'utf-8', function (err) {
+    fs.writeFile(dbPath, jsonSend, 'utf-8', function (err) {
       if (err) {
         const genericError = { error: 'An unexpected error occurred.' };
         res.status(500).json(genericError);
@@ -61,7 +51,7 @@ app.delete('/api/grades/:id', (req, res) => {
     if (found >= 0) {
       data.grades.splice(found, 1);
       const jsonSend = JSON.stringify(data, null, 2);
-      fs.writeFile('../database/data.json', jsonSend, 'utf-8', function (err) {
+      fs.writeFile(dbPath, jsonSend, 'utf-8', function (err) {
         if (err) {
           const genericError = { error: 'An unexpected error occurred.' };
           res.status(500).json(genericError);
@@ -90,12 +80,12 @@ app.put('/api/grades/:id', (req, res) => {
       const objToPush = {
         name: req.body.name,
         course: req.body.course,
-        grade: req.body.grade,
+        grade: parseInt(req.body.grade),
         id: parsedId
       };
       data.grades[foundIndex] = objToPush;
       const jsonSend = JSON.stringify(data, null, 2);
-      fs.writeFile('../database/data.json', jsonSend, 'utf-8', function (err) {
+      fs.writeFile(dbPath, jsonSend, 'utf-8', function (err) {
         if (err) {
           const genericError = { error: 'An unexpected error occurred.' };
           res.status(500).json(genericError);
@@ -109,7 +99,7 @@ app.put('/api/grades/:id', (req, res) => {
     }
   }
 });
-app.listen(3000, () =>
+app.listen(3001, () =>
 // eslint-disable-next-line no-console
   console.log('We are always listening!')
 );
