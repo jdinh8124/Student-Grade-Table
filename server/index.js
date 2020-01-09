@@ -4,6 +4,7 @@ const express = require('express');
 const data = require('../database/data.json');
 const fs = require('fs');
 const app = express();
+// const Errors = require('./indexError');
 
 const dbPath = path.resolve(__dirname, '../database/data.json');
 const filePath = express.static(path.join(__dirname, '/public'));

@@ -9,6 +9,7 @@ class App extends React.Component {
       grades: [],
       objToPass: null
     };
+    this.addNames = this.addNames.bind(this);
     this.deleteNames = this.deleteNames.bind(this);
     this.updateNames = this.updateNames.bind(this);
   }
@@ -19,9 +20,9 @@ class App extends React.Component {
         return response.json();
       })
       .then(myJson => {
-        this.setState(previousState => ({
+        this.setState({
           grades: myJson
-        }));
+        });
       })
       .catch(reason => {
         console.error(reason.message);
@@ -43,9 +44,9 @@ class App extends React.Component {
         .then(myJson => {
           const newArray = [...this.state.grades];
           newArray.push(myJson);
-          this.setState(previousState => ({
+          this.setState({
             grades: newArray
-          }));
+          });
         })
         .catch(reason => {
           console.error(reason.message);
@@ -80,9 +81,6 @@ class App extends React.Component {
       method: 'DELETE'
     })
       .then(response => {
-        return response.json();
-      })
-      .then(myJson => {
         const newArray = [...this.state.grades];
         const indexMatch = newArray.findIndex(object => object.id === id);
         newArray.splice(indexMatch, 1);
