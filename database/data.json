@@ -1,0 +1,29 @@
+{
+  "nextId": 15,
+  "grades": [
+    {
+      "name": "Mike",
+      "course": "Coding",
+      "grade": 100,
+      "id": 4
+    },
+    {
+      "name": "dfds",
+      "course": "dsfsdf",
+      "grade": 10,
+      "id": 5
+    },
+    {
+      "name": "James Dinh",
+      "course": "Teaching",
+      "grade": "1",
+      "id": 12
+    },
+    {
+      "name": "Jas inh",
+      "course": "Teaching",
+      "grade": "0",
+      "id": 13
+    }
+  ]
+}
