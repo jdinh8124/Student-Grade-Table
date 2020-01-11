@@ -7,7 +7,7 @@ export default class GradeForm extends React.Component {
       name: '',
       course: '',
       grade: '',
-      id: null,
+      gradeId: null,
       update: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -22,12 +22,12 @@ export default class GradeForm extends React.Component {
       const name = this.props.foundObj.name;
       const course = this.props.foundObj.course;
       const grade = this.props.foundObj.grade;
-      const id = this.props.foundObj.id;
+      const gradeId = this.props.foundObj.gradeId;
       this.setState({
         name: name,
         course: course,
         grade: grade,
-        id: id,
+        gradeId: gradeId,
         update: true
       });
     }
@@ -55,7 +55,7 @@ export default class GradeForm extends React.Component {
         name: this.state.name,
         course: this.state.course,
         grade: parseInt(this.state.grade),
-        id: this.state.id
+        gradeId: this.state.gradeId
       };
       this.props.submit(objectToSubmit, this.state.update);
       this.setState(previousState => ({ name: '', course: '', grade: '', update: false }));

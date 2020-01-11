@@ -6,8 +6,8 @@ export default function Grade(props) {
       <td>{props.name}</td>
       <td>{props.course}</td>
       <td>{props.grade}</td>
-      <td><button onClick={() => { props.buttonClick(props.id); }}className="btn btn-danger">Delete</button>
-        <button onClick={() => { props.updateClick(props.id); }} className="btn btn-info ml-2">Update</button>
+      <td><button onClick={() => { props.buttonClick(props.gradeId); }}className="btn btn-danger">Delete</button>
+        <button onClick={() => { props.updateClick(props.gradeId); }} className="btn btn-info ml-2">Update</button>
       </td>
     </tr>
   );
