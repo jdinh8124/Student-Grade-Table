@@ -1,97 +1,101 @@
-const path = require('path');
-// const jsonServer = require('json-server');
+const errors = require('./indexError');
+const pg = require('pg');
 const express = require('express');
-const data = require('../database/data.json');
-const fs = require('fs');
 const app = express();
-const Errors = require('./indexError');
 
-const dbPath = path.resolve(__dirname, '../database/data.json');
-const filePath = express.static(path.join(__dirname, '/public'));
-
-app.use(express.json(), filePath);
+const db = new pg.Pool({
+  connectionString: 'postgres://dev:lfz@localhost/studentGradeTable'
+});
+app.use(express.json());
 
 app.get('/api/grades/', (req, res) => {
-  const grades = data.grades;
-  res.status(200).json(grades);
-});
-
-app.post('/api/grades/', (req, res) => {
-  if (!req.body.name || !req.body.course || !req.body.grade) {
-    Errors(400, null, res);
-  } else {
-    const objToPush = {
-      name: req.body.name,
-      course: req.body.course,
-      grade: parseInt(req.body.grade),
-      id: data.nextId
-    };
-    data.grades.push(objToPush);
-    const jsonSend = JSON.stringify(data, null, 2);
-    data.nextId++;
-    fs.writeFile(dbPath, jsonSend, 'utf-8', function (err) {
-      if (err) {
-        Errors(500, null, res);
-      } else {
-        res.status(201).json(objToPush);
-
-      }
+  const sql = `
+  select *
+    from "grades"
+    `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      errors(500, null, res);
     });
-  }
 });
 
-app.delete('/api/grades/:id', (req, res) => {
-  const parsedId = parseInt(req.params.id);
-  if (isNaN(parsedId) || parsedId < 0) {
-    Errors(404, parsedId, res);
-  } else {
-    const found = data.grades.findIndex(element => element.id === parsedId);
-    if (found >= 0) {
-      data.grades.splice(found, 1);
-      const jsonSend = JSON.stringify(data, null, 2);
-      fs.writeFile(dbPath, jsonSend, 'utf-8', function (err) {
-        if (err) {
-          Errors(500, null, res);
-        } else {
-          res.status(204).json();
-        }
-      });
-    } else {
-      Errors(404, parsedId, res);
-    }
-  }
-});
-
-app.put('/api/grades/:id', (req, res) => {
-  const parsedId = parseInt(req.params.id);
+app.post('/api/grades', (req, res) => {
   if (!req.body.name || !req.body.course || !req.body.grade) {
-    Errors(400, null, res);
-  } else if (isNaN(parsedId) || parsedId < 0) {
-    Errors(404, parsedId, res);
+    errors(400, null, res);
   } else {
-    const foundIndex = data.grades.findIndex(element => element.id === parsedId);
-    if (foundIndex >= 0) {
-      const objToPush = {
-        name: req.body.name,
-        course: req.body.course,
-        grade: parseInt(req.body.grade),
-        id: parsedId
-      };
-      data.grades[foundIndex] = objToPush;
-      const jsonSend = JSON.stringify(data, null, 2);
-      fs.writeFile(dbPath, jsonSend, 'utf-8', function (err) {
-        if (err) {
-          Errors(500, null, res);
-        } else {
-          res.status(201).json(objToPush);
-        }
+    const sql = `
+  insert into "grades" ("name", "course", "grade")
+  values ($1, $2, $3)
+  returning *
+  `;
+    const params = [req.body.name, req.body.course, req.body.grade];
+    db.query(sql, params)
+      .then(result => {
+        res.status(201).json(result.rows[0]);
+      })
+      .catch(err => {
+        console.error(err);
+        errors(500, null, res);
       });
-    } else {
-      Errors(404, parsedId, res);
-    }
   }
 });
+
+app.put('/api/grades/:gradeId', (req, res) => {
+  const parsedId = parseInt(req.params.gradeId);
+  if (!req.body.name || !req.body.course || !req.body.grade) {
+    errors(400, null, res);
+  } else if (isNaN(parsedId) || parsedId < 0) {
+    errors(404, req.params.gradeId, res);
+  }
+  const sql = `
+  update "grades"
+  set  "name" = $1,
+       "course" = $2,
+       "grade" = $3
+  where "gradeId" = $4
+  returning *
+  `;
+  const params = [req.body.name, req.body.course, req.body.grade, req.params.gradeId];
+  db.query(sql, params)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      errors(500, null, res);
+    });
+});
+
+app.delete('/api/grades/:gradeId', (req, res) => {
+  const parsedId = parseInt(req.params.gradeId);
+  if (isNaN(parsedId) || parsedId < 0) {
+    errors(400, req.params.gradeId, res);
+  } else {
+    const sql = `
+  Delete From "grades"
+  where "gradeId" = $1
+  `;
+    const params = [req.params.gradeId];
+    db.query(sql, params)
+      .then(result => {
+        if (result.rowCount === 1) {
+          res.status(204).json();
+        } else {
+          errors(404, parsedId, res);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        errors(500, null, res);
+      });
+  }
+});
+
 app.listen(3001, () =>
-// eslint-disable-next-line no-console
-  console.log('We are always listening!')
+  // eslint-disable-next-line no-console
+  console.log('We are listening')
 );
