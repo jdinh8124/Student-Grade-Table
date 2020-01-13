@@ -65,8 +65,8 @@ class App extends React.Component {
         .then(myJson => {
           const newArray = [...this.state.grades];
           const indexMatch = newArray.findIndex(object => object.gradeId === student.gradeId);
-          newArray[indexMatch] = myJson;
-          this.setState(previousState => ({
+          newArray[indexMatch] = myJson[0];
+          this.setState(({
             grades: newArray
           }));
         })
