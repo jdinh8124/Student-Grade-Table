@@ -9,6 +9,7 @@ class App extends React.Component {
       grades: [],
       objToPass: null
     };
+    this.addNames = this.addNames.bind(this);
     this.deleteNames = this.deleteNames.bind(this);
     this.updateNames = this.updateNames.bind(this);
   }
@@ -19,9 +20,9 @@ class App extends React.Component {
         return response.json();
       })
       .then(myJson => {
-        this.setState(previousState => ({
+        this.setState({
           grades: myJson
-        }));
+        });
       })
       .catch(reason => {
         console.error(reason.message);
@@ -43,15 +44,15 @@ class App extends React.Component {
         .then(myJson => {
           const newArray = [...this.state.grades];
           newArray.push(myJson);
-          this.setState(previousState => ({
+          this.setState({
             grades: newArray
-          }));
+          });
         })
         .catch(reason => {
           console.error(reason.message);
         });
     } else {
-      fetch(`/api/grades/${student.id}`, {
+      fetch(`/api/grades/${student.gradeId}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -63,9 +64,9 @@ class App extends React.Component {
         })
         .then(myJson => {
           const newArray = [...this.state.grades];
-          const indexMatch = newArray.findIndex(object => object.id === student.id);
-          newArray[indexMatch] = myJson;
-          this.setState(previousState => ({
+          const indexMatch = newArray.findIndex(object => object.gradeId === student.gradeId);
+          newArray[indexMatch] = myJson[0];
+          this.setState(({
             grades: newArray
           }));
         })
@@ -75,16 +76,13 @@ class App extends React.Component {
     }
   }
 
-  deleteNames(id) {
-    fetch(`/api/grades/${id}`, {
+  deleteNames(gradeId) {
+    fetch(`/api/grades/${gradeId}`, {
       method: 'DELETE'
     })
       .then(response => {
-        return response.json();
-      })
-      .then(myJson => {
         const newArray = [...this.state.grades];
-        const indexMatch = newArray.findIndex(object => object.id === id);
+        const indexMatch = newArray.findIndex(object => object.gradeId === gradeId);
         newArray.splice(indexMatch, 1);
         this.setState(previousState => ({
           grades: newArray
@@ -95,8 +93,8 @@ class App extends React.Component {
       });
   }
 
-  updateNames(id) {
-    const foundObj = this.state.grades.find(object => object.id === id);
+  updateNames(gradeId) {
+    const foundObj = this.state.grades.find(object => object.gradeId === gradeId);
     this.setState({
       objToPass: foundObj
     });
