@@ -1,115 +1,101 @@
-// const path = require('path');
-// const jsonServer = require('json-server');
+const errors = require('./indexError');
+const pg = require('pg');
 const express = require('express');
-const data = require('../database/data.json');
-const fs = require('fs');
 const app = express();
+
+const db = new pg.Pool({
+  connectionString: 'postgres://dev:lfz@localhost/studentGradeTable'
+});
 app.use(express.json());
 
-// var router = express.Router();
-// const dbPath = path.resolve(__dirname, '../database/data.json');
-// const filePath = express.static(path.join(__dirname, '/public'));
-// // const server = jsonServer.create();
-// const middleware = jsonServer.defaults();
-// const endpoints = jsonServer.router(dbPath);
-// app.use('/api', endpoints);
-// server.use(middleware);
-// server.use('/api', endpoints);
-// server.listen(3001, () => {
-//   // eslint-disable-next-line no-console
-//   console.log('JSON Server listening on port 3001\n');
-// });
-
 app.get('/api/grades/', (req, res) => {
-  const grades = data.grades;
-  res.status(200).json(grades);
-});
-
-app.post('/api/grades/', (req, res) => {
-  if (!req.body) {
-    const errorObjectNoBody = { error: 'There was no content to POST' };
-    res.status(400).json(errorObjectNoBody);
-  } else {
-    const objToPush = {
-      name: req.body.name,
-      course: req.body.course,
-      grade: req.body.grade,
-      id: data.nextId
-    };
-    data.grades.push(objToPush);
-    const jsonSend = JSON.stringify(data, null, 2);
-    data.nextId++;
-    fs.writeFile('../database/data.json', jsonSend, 'utf-8', function (err) {
-      if (err) {
-        const genericError = { error: 'An unexpected error occurred.' };
-        res.status(500).json(genericError);
-      } else {
-        res.status(201).json(objToPush);
-
-      }
+  const sql = `
+  select *
+    from "grades"
+    `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      errors(500, null, res);
     });
-  }
 });
 
-app.delete('/api/grades/:id', (req, res) => {
-  const parsedId = parseInt(req.params.id);
-  if (isNaN(parsedId) || parsedId < 0) {
-    const errorObject = { error: 'ID must be a positive integer' };
-    res.status(400).json(errorObject);
+app.post('/api/grades', (req, res) => {
+  if (!req.body.name || !req.body.course || !req.body.grade) {
+    errors(400, null, res);
   } else {
-    const found = data.grades.findIndex(element => element.id === parsedId);
-    if (found >= 0) {
-      data.grades.splice(found, 1);
-      const jsonSend = JSON.stringify(data, null, 2);
-      fs.writeFile('../database/data.json', jsonSend, 'utf-8', function (err) {
-        if (err) {
-          const genericError = { error: 'An unexpected error occurred.' };
-          res.status(500).json(genericError);
-        } else {
-          res.status(204).json();
-        }
+    const sql = `
+  insert into "grades" ("name", "course", "grade")
+  values ($1, $2, $3)
+  returning *
+  `;
+    const params = [req.body.name, req.body.course, req.body.grade];
+    db.query(sql, params)
+      .then(result => {
+        res.status(201).json(result.rows[0]);
+      })
+      .catch(err => {
+        console.error(err);
+        errors(500, null, res);
       });
-    } else {
-      const notFound = { error: `ID ${parsedId} does not exsist` };
-      res.status(404).json(notFound);
-    }
   }
 });
 
-app.put('/api/grades/:id', (req, res) => {
-  const parsedId = parseInt(req.params.id);
-  if (!req.body) {
-    const errorObjectNoBody = { error: 'There was no content to PUT' };
-    res.status(400).json(errorObjectNoBody);
+app.put('/api/grades/:gradeId', (req, res) => {
+  const parsedId = parseInt(req.params.gradeId);
+  if (!req.body.name || !req.body.course || !req.body.grade) {
+    errors(400, null, res);
   } else if (isNaN(parsedId) || parsedId < 0) {
-    const errorObject = { error: 'ID must be a positive integer' };
-    res.status(400).json(errorObject);
+    errors(404, req.params.gradeId, res);
+  }
+  const sql = `
+  update "grades"
+  set  "name" = $1,
+       "course" = $2,
+       "grade" = $3
+  where "gradeId" = $4
+  returning *
+  `;
+  const params = [req.body.name, req.body.course, req.body.grade, req.params.gradeId];
+  db.query(sql, params)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      errors(500, null, res);
+    });
+});
+
+app.delete('/api/grades/:gradeId', (req, res) => {
+  const parsedId = parseInt(req.params.gradeId);
+  if (isNaN(parsedId) || parsedId < 0) {
+    errors(400, req.params.gradeId, res);
   } else {
-    const foundIndex = data.grades.findIndex(element => element.id === parsedId);
-    if (foundIndex >= 0) {
-      const objToPush = {
-        name: req.body.name,
-        course: req.body.course,
-        grade: req.body.grade,
-        id: parsedId
-      };
-      data.grades[foundIndex] = objToPush;
-      const jsonSend = JSON.stringify(data, null, 2);
-      fs.writeFile('../database/data.json', jsonSend, 'utf-8', function (err) {
-        if (err) {
-          const genericError = { error: 'An unexpected error occurred.' };
-          res.status(500).json(genericError);
+    const sql = `
+  Delete From "grades"
+  where "gradeId" = $1
+  `;
+    const params = [req.params.gradeId];
+    db.query(sql, params)
+      .then(result => {
+        if (result.rowCount === 1) {
+          res.status(204).json();
         } else {
-          res.status(201).json(objToPush);
+          errors(404, parsedId, res);
         }
+      })
+      .catch(err => {
+        console.error(err);
+        errors(500, null, res);
       });
-    } else {
-      const notFound = { error: `ID ${parsedId} does not exsist` };
-      res.status(404).json(notFound);
-    }
   }
 });
-app.listen(3000, () =>
-// eslint-disable-next-line no-console
-  console.log('We are always listening!')
+
+app.listen(3001, () =>
+  // eslint-disable-next-line no-console
+  console.log('We are listening')
 );
