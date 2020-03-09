@@ -39,23 +39,25 @@
 git clone https://github.com/jdinh8124/Student-Grade-Table
 
 ```
-1. Install all dependencies in `package.json` with NPM.
-    ```bash
-    npm install
-    ```
-1. Run npm dev
+2. Install all dependencies in `package.json` with NPM.
+```
+
+npm install
+
+```
+3. Run npm dev
 ``` 
 
 npm run dev
 
 ```
-1. Open your browser to localhost:3000
+4. Open your browser to localhost:3000
 ```  
 
 https://localhost:3000 
 
 ```
-1. Enjoy and make sure this is just an example site!
+5. Enjoy and make sure this is just an example site!
 
 ## Live Demo
 ![Student Grade Table](demo.gif)
