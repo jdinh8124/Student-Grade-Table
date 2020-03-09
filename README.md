@@ -1,91 +1,61 @@
 # sgt-react
 
-The Student Grade Table: Written in React
+> - Maintained by: `James Dinh - jdinh8124`
 
-## Introduction
+## Live
+[Link To Live Site](https://student-grade-table.jamestdinh.com/)
 
-For this project, you will be building a single-page React application that communicates with a server to manipulate data.
+
+## Summary
+- The Student Grade Table: Written in React, server built in node.js + express, and database written on postgreSQL.
+
+## Languages Used
+- React.js
+- JavaScript (ES5 & ES6)
+- NodeJS
+- PostgreSQL
+- HTML5
+- CSS3
+
+## Features
+- Users can add student grades
+- Users can delete grades
+- Users can update student information
+
+## Planned Additions
+- Different themes
+- Multiple Classes
+
+## Takeaways
+- The power of react and passing props making the UI more efficent
+- I believe that React makes writing our node backend a lot easier
+- Bootstrap makes css and media queries a lot easier 
 
 ## Getting Started
 
-1. Fork this repository to your GitHub account and clone it into the `lfz` directory on your local machine.
+1. Clone this repository from your github to your local computer
+```
+
+git clone https://github.com/jdinh8124/Student-Grade-Table
+
+```
 1. Install all dependencies in `package.json` with NPM.
     ```bash
     npm install
     ```
+1. Run npm dev
+``` 
 
-## NPM Scripts
+npm run dev
 
-- `dev` - Start Webpack Dev Server on port `3000` and JSON Server on port `3001`. (Go to `http://localhost:3000`)
-- `build` - Run Webpack to build the React client into `server/public`. (Usually only run during deployment)
-
-## Features
-
-- [User can view all grades.](features/user-can-view-all-grades.md)
-- [User can view the average grade.](features/user-can-view-the-average-grade.md)
-- [User can add a grade.](features/user-can-add-a-grade.md)
-- [User can delete a grade.](features/user-can-delete-a-grade.md)
-
-## Preview
-
-![SGT React](sgt-react.gif)
-
-## Server API
-
-#### `GET /api/grades`
-
-Responds with all recorded `grades`.
-
-##### Example Response Body
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Scott Tolinski",
-    "grade": 100,
-    "course": "Web Development"
-  },
-  {
-    "id": 2,
-    "name": "Scott Bowler",
-    "grade": 100,
-    "course": "Web Development"
-  }
-]
 ```
+1. Open your browser to localhost:3000
+```  
 
-#### `POST /api/grades`
+https://localhost:3000 
 
-Accepts a single `grade` object in the request body and inserts it into all `grades`. Responds with the inserted `grade`, including an auto-generated `id`.
-
-##### Example Request Body
-
-```json
-{
-  "name": "Tim Davis",
-  "grade": 40,
-  "course": "Web Development"
-}
 ```
+1. Enjoy and make sure this is just an example site!
 
-##### Example Response Body
-
-```json
-{
-  "id": 3,
-  "name": "Tim Davis",
-  "grade": 40,
-  "course": "Web Development"
-}
-```
-
-#### `DELETE /api/grades/:id`
-
-Removes a `grade` from all recorded `grades`, given an `id` in the request URL. _e.g._ `/api/grades/3`
-
-##### Example Response Body
-
-```json
-{}
-```
+## Live Demo
+![Student Grade Table](demo.gif)
