@@ -7,7 +7,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       grades: [],
-      objToPass: null
+      objToPass: null,
+      signedIn: true
     };
     this.addNames = this.addNames.bind(this);
     this.deleteNames = this.deleteNames.bind(this);
@@ -115,17 +116,23 @@ class App extends React.Component {
     this.getNames();
   }
 
-  render() {
-    const average = this.getAverageGrade();
-    return (
-      <div className="m-5 container-fluid ">
-        <Header text="Student Grade Table" grade={average}/>
-        <div className=" row container-fluid justify-content-center ">
-          <GradeTable grades={this.state.grades} remove={this.deleteNames} update={this.updateNames} />
-          <GradeForm submit={this.addNames} foundObj={this.state.objToPass}/>
+  isUserSignedIn() {
+    if (this.state.signedIn) {
+      const average = this.getAverageGrade();
+      return (
+        <div className="m-5 container-fluid ">
+          <Header text="Student Grade Table" grade={average} />
+          <div className=" row container-fluid justify-content-center ">
+            <GradeTable grades={this.state.grades} remove={this.deleteNames} update={this.updateNames} />
+            <GradeForm submit={this.addNames} foundObj={this.state.objToPass} />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+  }
+
+  render() {
+    return this.isUserSignedIn();
   }
 }
 
