@@ -26,6 +26,7 @@
 - Different themes
 - Multiple Classes
 - Teacher Login screen with a button for guest
+- bcrypt addition you sign in
 
 ## Takeaways
 - The power of react and passing props making the UI more efficent
