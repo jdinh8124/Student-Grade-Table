@@ -1,4 +1,4 @@
-# sgt-react
+# Student Grade Table
 
 > - Maintained by: `James Dinh - jdinh8124`
 
