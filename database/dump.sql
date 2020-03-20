@@ -16,10 +16,9 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public.orders DROP CONSTRAINT orders_pkey;
-ALTER TABLE public.orders ALTER COLUMN "orderId" DROP DEFAULT;
-DROP SEQUENCE public."orders_orderId_seq";
-DROP TABLE public.orders;
+ALTER TABLE public.grades ALTER COLUMN "gradeId" DROP DEFAULT;
+DROP SEQUENCE public."grades_gradeId_seq";
+DROP TABLE public.grades;
 DROP EXTENSION plpgsql;
 DROP SCHEMA public;
 --
@@ -55,24 +54,23 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: orders; Type: TABLE; Schema: public; Owner: -
+-- Name: grades; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.orders (
-    "orderId" integer NOT NULL,
-    "cartId" integer NOT NULL,
+CREATE TABLE public.grades (
+    "gradeId" integer NOT NULL,
     name text NOT NULL,
-    "creditCard" text NOT NULL,
-    "shippingAddress" text NOT NULL,
+    course text NOT NULL,
+    grade integer NOT NULL,
     "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
 );
 
 
 --
--- Name: orders_orderId_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: grades_gradeId_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public."orders_orderId_seq"
+CREATE SEQUENCE public."grades_gradeId_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -82,40 +80,34 @@ CREATE SEQUENCE public."orders_orderId_seq"
 
 
 --
--- Name: orders_orderId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: grades_gradeId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public."orders_orderId_seq" OWNED BY public.orders."orderId";
-
-
---
--- Name: orders orderId; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.orders ALTER COLUMN "orderId" SET DEFAULT nextval('public."orders_orderId_seq"'::regclass);
+ALTER SEQUENCE public."grades_gradeId_seq" OWNED BY public.grades."gradeId";
 
 
 --
--- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
+-- Name: grades gradeId; Type: DEFAULT; Schema: public; Owner: -
 --
 
-COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", "createdAt") FROM stdin;
+ALTER TABLE ONLY public.grades ALTER COLUMN "gradeId" SET DEFAULT nextval('public."grades_gradeId_seq"'::regclass);
+
+
+--
+-- Data for Name: grades; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.grades ("gradeId", name, course, grade, "createdAt") FROM stdin;
+33	Mark	Coding	98	2020-03-09 09:46:13.121971-07
+35	Hello	World	1	2020-03-09 10:13:48.814116-07
 \.
 
 
 --
--- Name: orders_orderId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: grades_gradeId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."orders_orderId_seq"', 1, false);
-
-
---
--- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT orders_pkey PRIMARY KEY ("orderId");
+SELECT pg_catalog.setval('public."grades_gradeId_seq"', 35, true);
 
 
 --
