@@ -4,7 +4,7 @@
 
 ## Live
 [Link To Live Site](https://student-grade-table.jamestdinh.com/)
-
+- Live Link is under construction
 
 ## Summary
 - The Student Grade Table: Written in React, server built in node.js + express, and database written on postgreSQL.
