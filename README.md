@@ -3,8 +3,8 @@
 > - Maintained by: `James Dinh - jdinh8124`
 
 ## Live
-[Link To Live Site](https://student-grade-table.jamestdinh.com/)
-
+[Link To Live Site](https://student-grades.jamestdinh.com/)
+- Live Link is under construction
 
 ## Summary
 - The Student Grade Table: Written in React, server built in node.js + express, and database written on postgreSQL.
