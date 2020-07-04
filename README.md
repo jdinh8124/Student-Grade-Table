@@ -3,7 +3,7 @@
 > - Maintained by: `James Dinh - jdinh8124`
 
 ## Live
-[Link To Live Site](https://student-grade-table.jamestdinh.com/)
+[Link To Live Site](https://student-grades.jamestdinh.com/)
 - Live Link is under construction
 
 ## Summary
