@@ -95,7 +95,7 @@ app.delete('/api/grades/:gradeId', (req, res) => {
   }
 });
 
-app.listen(3001, () =>
+app.listen(process.env.PORT, () =>
   // eslint-disable-next-line no-console
   console.log('We are listening')
 );
