@@ -1,11 +1,10 @@
-require('dotenv/config');
 const errors = require('./indexError');
 const pg = require('pg');
 const express = require('express');
 const app = express();
 
 const db = new pg.Pool({
-  connectionString: 'postgres://dev:lfz@localhost/studentGradeTable'
+  connectionString: process.env.DATABASE_URL
 });
 app.use(express.json());
 
