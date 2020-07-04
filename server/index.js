@@ -1,3 +1,4 @@
+require('dotenv/config');
 const errors = require('./indexError');
 const pg = require('pg');
 const express = require('express');
@@ -8,7 +9,7 @@ const db = new pg.Pool({
 });
 app.use(express.json());
 
-app.get('/api/grades/', (req, res) => {
+app.get('/api/grades', (req, res) => {
   const sql = `
   select *
     from "grades"
