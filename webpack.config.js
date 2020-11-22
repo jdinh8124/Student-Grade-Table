@@ -1,21 +1,21 @@
+require('dotenv/config');
 const path = require('path');
 
-const srcPath = path.resolve(__dirname, 'client');
-const publicPath = path.resolve(__dirname, 'server/public');
+const clientPath = path.join(__dirname, 'client/');
+const publicPath = path.join(__dirname, 'server/public/');
 
 module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  entry: './client',
+  entry: clientPath,
   output: {
     path: publicPath
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        include: srcPath,
+        test: /\.jsx/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -29,13 +29,14 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    host: '0.0.0.0',
-    port: 3000,
     contentBase: publicPath,
-    watchContentBase: true,
-    stats: 'minimal',
+    historyApiFallback: true,
+    host: '0.0.0.0',
+    port: process.env.DEV_SERVER_PORT,
     proxy: {
-      '/api': 'http://localhost:3001'
-    }
+      '/api': `http://localhost:${process.env.PORT}`
+    },
+    stats: 'minimal',
+    watchContentBase: true
   }
 };
