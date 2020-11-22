@@ -1,13 +1,12 @@
+require('dotenv/config');
 const errors = require('./indexError');
-const pg = require('pg');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 const app = express();
 
-const db = new pg.Pool({
-  connectionString: process.env.DATABASE_URL
-});
+const db = require('./database');
+
 app.use(express.json());
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
