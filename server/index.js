@@ -1,3 +1,4 @@
+require('dotenv/config');
 const errors = require('./indexError');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
@@ -97,7 +98,9 @@ app.delete('/api/grades/:gradeId', (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () =>
+const port = process.env.PORT || 3025;
+
+app.listen(port, () =>
   // eslint-disable-next-line no-console
-  console.log('We are listening', process.env.PORT)
+  console.log('We are listening', port)
 );
