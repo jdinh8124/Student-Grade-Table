@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Header(props) {
+const Header = props => {
   return (
     <div className="row container-fluid  justify-content-center text-center mb-sm-4 mb-xs-4 pb-3 ">
       <div className="col-xl-4 col-lg-9">
@@ -11,6 +11,7 @@ export default function Header(props) {
         <span className="badge d-inline fontInBetween border-2 rounded badge-secondary">{props.grade}</span>
       </div>
     </div>
-
   );
-}
+};
+
+export default Header;
