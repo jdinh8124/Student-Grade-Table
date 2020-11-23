@@ -1,114 +1,113 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default class GradeForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      course: '',
-      grade: '',
-      gradeId: null,
-      update: false
-    };
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleCourseChange = this.handleCourseChange.bind(this);
-    this.handleGradeChange = this.handleGradeChange.bind(this);
-    this.submitStudent = this.submitStudent.bind(this);
-    this.resetForm = this.resetForm.bind(this);
-  }
+const GradeForm = props => {
+  const [name, changeName] = React.useState('');
+  const [course, changeCourse] = React.useState('');
+  const [grade, changeGrade] = React.useState('');
+  const [gradeId, changeGradeId] = React.useState('');
+  const [update, setUpdateState] = React.useState(false);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.foundObj !== prevProps.foundObj) {
-      const name = this.props.foundObj.name;
-      const course = this.props.foundObj.course;
-      const grade = this.props.foundObj.grade;
-      const gradeId = this.props.foundObj.gradeId;
-      this.setState({
-        name: name,
-        course: course,
-        grade: grade,
-        gradeId: gradeId,
-        update: true
-      });
-    }
-  }
-
-  handleNameChange(event) {
-    this.setState({ name: event.target.value });
-  }
-
-  handleCourseChange(event) {
-    this.setState({ course: event.target.value });
-  }
-
-  handleGradeChange(event) {
-    this.setState({ grade: event.target.value });
-  }
-
-  submitStudent(event) {
-    event.preventDefault();
-    if (this.state.name === '' || this.state.course === '' || this.state.grade === '') {
+  const isFirstUpdate = React.useRef(true);
+  useEffect(() => {
+    if (isFirstUpdate.current) {
+      isFirstUpdate.current = false;
       return;
     }
-    if (this.state.update) {
+
+    const propName = props.foundObj.name;
+    const propCourse = props.foundObj.course;
+    const propGrade = props.foundObj.grade;
+    const propGradeId = props.foundObj.gradeId;
+
+    changeName(propName);
+    changeCourse(propCourse);
+    changeGrade(propGrade);
+    changeGradeId(propGradeId);
+    setUpdateState(true);
+  }, [props.foundObj]
+  );
+
+  const handleNameChange = newName => {
+    changeName(newName.target.value);
+  };
+
+  const handleCourseChange = newCourse => {
+    changeCourse(newCourse.target.value);
+  };
+
+  const handleGradeChange = newGrade => {
+    changeGrade(newGrade.target.value);
+  };
+
+  const submitStudent = submitEvent => {
+    submitEvent.preventDefault();
+    if (name === '' || course === '' || grade === '' || !parseFloat(grade)) {
+      return;
+    }
+    if (update) {
       const objectToSubmit = {
-        name: this.state.name,
-        course: this.state.course,
-        grade: parseInt(this.state.grade),
-        gradeId: this.state.gradeId
+        name: name,
+        course: course,
+        grade: parseInt(grade),
+        gradeId: gradeId
       };
-      this.props.submit(objectToSubmit, this.state.update);
-      this.setState(previousState => ({ name: '', course: '', grade: '', update: false }));
+      props.submit(objectToSubmit, update);
+      clearState();
     } else {
       const objectToSubmit = {
-        name: this.state.name,
-        course: this.state.course,
-        grade: parseInt(this.state.grade)
+        name: name,
+        course: course,
+        grade: parseInt(grade)
       };
-      this.props.submit(objectToSubmit, false);
-      this.setState(previousState => ({ name: '', course: '', grade: '', update: false }));
+      props.submit(objectToSubmit, false);
+      clearState();
     }
 
-  }
+  };
 
-  resetForm(event) {
-    event.preventDefault();
-    this.setState(previousState => ({ name: '', course: '', grade: '', update: false }));
-  }
+  const clearState = () => {
+    changeName('');
+    changeCourse('');
+    changeGrade('');
+    setUpdateState(false);
+  };
 
-  buttonToRender() {
-    return this.state.update ? <button className="btn btn-outline-primary ml-2" type="submit">Update</button> : <button className="btn btn-success ml-2" type="submit">Submit</button>;
-  }
+  const buttonToRender = () => {
+    return update ? <button className="btn btn-outline-primary ml-2" type="submit">Update</button> : <button className="btn btn-success ml-2" type="submit">Submit</button>;
+  };
 
-  render() {
-    const buttonToChange = this.buttonToRender();
-    return (
-      <form className="ml-xl-5 ml-lg-5" onSubmit={this.submitStudent} onReset={this.resetForm}>
-        <div>
-          <div className="input-group mb-3 ">
-            <div className="input-group-prepend">
-              <span className="input-group-text" ><i className="fas fa-user "></i></span>
-            </div>
-            <input type="text" className="border-2 form-control" onChange={this.handleNameChange} placeholder="Name" value={this.state.name}/>
-          </div>
-
-          <div className="input-group mb-3">
-            <div className="input-group-prepend"></div>
-            <span className="input-group-text" ><i className="far fa-list-alt"></i></span>
-            <input type="text" className="border-2 form-control" onChange={this.handleCourseChange} placeholder="Course" value={this.state.course} />
-          </div>
-
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text" ><i className="fas fa-graduation-cap"></i>
-              </span>
-              <input type="text" className="border-2 form-control" onChange={this.handleGradeChange} placeholder="Grade" value={this.state.grade} />
-            </div>
+  const buttonToChange = buttonToRender();
+  return (
+    <form className="ml-xl-5 ml-lg-5" onSubmit={submitStudent} onReset={clearState}>
+      <div>
+        <div className="input-group mb-3 ">
+          <div className="input-group-prepend">
+            <span className="input-group-text" ><i className="fas fa-user icon"></i></span>
+            <input type="text" className="border-2 form-control" onChange={handleNameChange} placeholder="Name" value={name}/>
           </div>
         </div>
+
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" ><i className="far fa-list-alt icon"></i></span>
+            <input type="text" className="border-2 form-control" onChange={handleCourseChange} placeholder="Course" value={course} />
+          </div>
+        </div>
+
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" ><i className="fas fa-graduation-cap icon"></i></span>
+            <input type="text" className="border-2 form-control" onChange={handleGradeChange} placeholder="Grade" value={grade} />
+          </div>
+        </div>
+      </div>
+
+      <div className="row justify-content-center">
         {buttonToChange}
         <button className="btn btn-secondary  ml-2" type="reset">Reset</button>
-      </form>
-    );
-  }
-}
+      </div>
+    </form>
+  );
+};
+
+export default GradeForm;
