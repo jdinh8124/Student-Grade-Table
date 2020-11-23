@@ -116,7 +116,7 @@ const App = props => {
       return (
         <div className="m-md-5 m-1 container-fluid ">
           <Header text="Student Grade Table" grade={average} />
-          <div className=" row container-fluid justify-content-center ">
+          <div className="row no-gutters container-fluid justify-content-center ">
             <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
             <GradeForm submit={addNames} foundObj={objToPass} />
           </div>
