@@ -1,7 +1,7 @@
 import React from 'react';
 import Grade from './grade';
 
-export default function GradeTable(props) {
+const GradeTable = props => {
   const elements = props.grades.map(student => {
     return <Grade name={student.name} course={student.course} grade={student.grade} key={student.gradeId} gradeId={student.gradeId} buttonClick={props.remove} updateClick={props.update}/>;
   });
@@ -20,4 +20,6 @@ export default function GradeTable(props) {
       </tbody>
     </table>
   );
-}
+};
+
+export default GradeTable;

@@ -1,36 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './header';
 import GradeTable from './gradeTable';
 import GradeForm from './gradeForm';
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      grades: [],
-      objToPass: null,
-      signedIn: true
-    };
-    this.addNames = this.addNames.bind(this);
-    this.deleteNames = this.deleteNames.bind(this);
-    this.updateNames = this.updateNames.bind(this);
-  }
 
-  getNames() {
+const App = props => {
+  const [grades, setGrades] = React.useState([]);
+  const [objToPass, setObjToPass] = React.useState(null);
+  const [signedIn] = React.useState(true);
+
+  const getNames = () => {
     fetch('/api/grades')
       .then(response => {
         return response.json();
       })
       .then(myJson => {
-        this.setState({
-          grades: myJson
-        });
+        setGrades(myJson);
       })
       .catch(reason => {
         console.error(reason.message);
       });
-  }
+  };
 
-  addNames(student, changes) {
+  const addNames = (student, changes) => {
     if (!changes) {
       fetch('/api/grades', {
         method: 'POST',
@@ -43,11 +34,9 @@ class App extends React.Component {
           return response.json();
         })
         .then(myJson => {
-          const newArray = [...this.state.grades];
+          const newArray = [...grades];
           newArray.push(myJson);
-          this.setState({
-            grades: newArray
-          });
+          setGrades(newArray);
         })
         .catch(reason => {
           console.error(reason.message);
@@ -64,45 +53,42 @@ class App extends React.Component {
           return response.json();
         })
         .then(myJson => {
-          const newArray = [...this.state.grades];
+          const newArray = [...grades];
           const indexMatch = newArray.findIndex(object => object.gradeId === student.gradeId);
           newArray[indexMatch] = myJson[0];
-          this.setState(({
-            grades: newArray
-          }));
+          setGrades(newArray);
         })
         .catch(reason => {
           console.error(reason.message);
         });
     }
-  }
+  };
 
-  deleteNames(gradeId) {
+  const deleteNames = gradeId => {
     fetch(`/api/grades/${gradeId}`, {
       method: 'DELETE'
     })
       .then(response => {
-        const newArray = [...this.state.grades];
+        const newArray = [...grades];
         const indexMatch = newArray.findIndex(object => object.gradeId === gradeId);
         newArray.splice(indexMatch, 1);
-        this.setState(previousState => ({
-          grades: newArray
-        }));
+        setGrades(newArray);
       })
       .catch(reason => {
         console.error(reason.message);
       });
-  }
+  };
 
-  updateNames(gradeId) {
-    const foundObj = this.state.grades.find(object => object.gradeId === gradeId);
-    this.setState({
-      objToPass: foundObj
-    });
-  }
+  const updateNames = gradeId => {
+    const foundObj = grades.find(object => object.gradeId === gradeId);
 
-  getAverageGrade() {
-    const arrayOfGrades = this.state.grades.map(studentGrades => {
+    if (foundObj) {
+      setObjToPass(foundObj);
+    }
+  };
+
+  const getAverageGrade = () => {
+    const arrayOfGrades = grades.map(studentGrades => {
       return studentGrades.grade;
     });
     if (arrayOfGrades.length > 0) {
@@ -110,30 +96,35 @@ class App extends React.Component {
     } else {
       return 'N/A';
     }
-  }
+  };
 
-  componentDidMount() {
-    this.getNames();
+  const isFirstUpdate = React.useRef(true);
+  useEffect(() => {
+    if (isFirstUpdate.current) {
+      isFirstUpdate.current = false;
+      getNames();
+    }
   }
+  );
 
-  isUserSignedIn() {
-    if (this.state.signedIn) {
-      const average = this.getAverageGrade();
+  // componentDidMount() {
+  // }
+
+  const isUserSignedIn = () => {
+    if (signedIn) {
+      const average = getAverageGrade();
       return (
-        <div className="m-5 container-fluid ">
+        <div className="m-md-5 m-1 container-fluid ">
           <Header text="Student Grade Table" grade={average} />
           <div className=" row container-fluid justify-content-center ">
-            <GradeTable grades={this.state.grades} remove={this.deleteNames} update={this.updateNames} />
-            <GradeForm submit={this.addNames} foundObj={this.state.objToPass} />
+            <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
+            <GradeForm submit={addNames} foundObj={objToPass} />
           </div>
         </div>
       );
     }
-  }
-
-  render() {
-    return this.isUserSignedIn();
-  }
-}
+  };
+  return isUserSignedIn();
+};
 
 export default App;
