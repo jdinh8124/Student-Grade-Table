@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Grade(props) {
+const Grade = props => {
   return (
     <tr>
       <td>{props.name}</td>
@@ -11,4 +11,6 @@ export default function Grade(props) {
       </td>
     </tr>
   );
-}
+};
+
+export default Grade;
