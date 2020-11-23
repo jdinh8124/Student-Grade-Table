@@ -34,4 +34,16 @@ border-style:solid!important;
   font-size: 31px;
   margin: 0;
   }
+
+  .badge {
+    font-size: 22px;
+  }
+}
+
+
+@media only screen and (max-width: 800px){
+  .titleFont{
+    font-size: 40px;
+  
+    }
 }

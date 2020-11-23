@@ -120,7 +120,7 @@ class App extends React.Component {
     if (this.state.signedIn) {
       const average = this.getAverageGrade();
       return (
-        <div className="m-5 container-fluid ">
+        <div className="m-md-5 m-1 container-fluid ">
           <Header text="Student Grade Table" grade={average} />
           <div className=" row container-fluid justify-content-center ">
             <GradeTable grades={this.state.grades} remove={this.deleteNames} update={this.updateNames} />
