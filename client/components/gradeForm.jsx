@@ -41,7 +41,7 @@ const GradeForm = props => {
 
   const submitStudent = submitEvent => {
     submitEvent.preventDefault();
-    if (name === '' || course === '' || grade === '') {
+    if (name === '' || course === '' || grade === '' || !parseFloat(grade)) {
       return;
     }
     if (update) {
