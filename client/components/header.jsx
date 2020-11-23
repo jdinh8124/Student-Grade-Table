@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Header(props) {
   return (
-    <div className="row container-fluid  justify-content-center text-center mb-sm-4 mb-xs-4 ">
+    <div className="row container-fluid  justify-content-center text-center mb-sm-4 mb-xs-4 pb-3 ">
       <div className="col-xl-4 col-lg-9">
         <div className="h1 titleFont">{props.text}</div>
       </div>

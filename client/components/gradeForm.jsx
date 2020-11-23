@@ -87,27 +87,30 @@ export default class GradeForm extends React.Component {
         <div>
           <div className="input-group mb-3 ">
             <div className="input-group-prepend">
-              <span className="input-group-text" ><i className="fas fa-user "></i></span>
+              <span className="input-group-text" ><i className="fas fa-user icon"></i></span>
+              <input type="text" className="border-2 form-control" onChange={this.handleNameChange} placeholder="Name" value={this.state.name}/>
             </div>
-            <input type="text" className="border-2 form-control" onChange={this.handleNameChange} placeholder="Name" value={this.state.name}/>
-          </div>
-
-          <div className="input-group mb-3">
-            <div className="input-group-prepend"></div>
-            <span className="input-group-text" ><i className="far fa-list-alt"></i></span>
-            <input type="text" className="border-2 form-control" onChange={this.handleCourseChange} placeholder="Course" value={this.state.course} />
           </div>
 
           <div className="input-group mb-3">
             <div className="input-group-prepend">
-              <span className="input-group-text" ><i className="fas fa-graduation-cap"></i>
-              </span>
+              <span className="input-group-text" ><i className="far fa-list-alt icon"></i></span>
+              <input type="text" className="border-2 form-control" onChange={this.handleCourseChange} placeholder="Course" value={this.state.course} />
+            </div>
+          </div>
+
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" ><i className="fas fa-graduation-cap icon"></i></span>
               <input type="text" className="border-2 form-control" onChange={this.handleGradeChange} placeholder="Grade" value={this.state.grade} />
             </div>
           </div>
         </div>
-        {buttonToChange}
-        <button className="btn btn-secondary  ml-2" type="reset">Reset</button>
+
+        <div className="row justify-content-center">
+          {buttonToChange}
+          <button className="btn btn-secondary  ml-2" type="reset">Reset</button>
+        </div>
       </form>
     );
   }
