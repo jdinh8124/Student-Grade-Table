@@ -4,7 +4,10 @@
 
 
 ## Summary
-- The Student Grade Table: Written in React, server built in node.js + express, and database written on postgreSQL.
+- Full stack mobile-responsive Content Management System that communicates via Fetch allowing users to Create, Read, Update, and Delete (CRUD) student information through PostgreSQL, Node, and React. The project is deployed using AWS, ubuntu and nginx
+
+## Live Demo 
+Link: https://student-grade-table.jamestdinh.com/
 
 ## Languages Used
 - React.js
