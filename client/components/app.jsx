@@ -114,7 +114,7 @@ const App = props => {
     if (signedIn) {
       const average = getAverageGrade();
       return (
-        <div className="m-md-5 m-1 container-fluid ">
+        <div className="m-1 m-md-3 container-fluid ">
           <Header text="Student Grade Table" grade={average} />
           <div className="row container-fluid justify-content-center ">
             <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
