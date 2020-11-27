@@ -7,7 +7,7 @@ const Header = props => {
         <div className="h1 titleFont">{props.text}</div>
       </div>
       <div className="col-xl-3 offset-xl-5 col-lg-6 container-fluid   ">
-        <div className="h2 d-inline fontInBetween">Average Grade </div>
+        <div className="h2 d-inline fontInBetween pr-1">Average Grade</div>
         <span className="badge d-inline fontInBetween border-2 rounded badge-secondary">{props.grade}</span>
       </div>
     </div>

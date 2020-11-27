@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import Authentication from './authentication';
 import Header from './header';
 import GradeTable from './gradeTable';
 import GradeForm from './gradeForm';
 
-const App = props => {
+export default function App() {
   const [grades, setGrades] = React.useState([]);
   const [objToPass, setObjToPass] = React.useState(null);
-  const [signedIn] = React.useState(true);
+  const [signedIn, userSignedIn] = React.useState(false);
 
   const getNames = () => {
     fetch('/api/grades')
@@ -68,7 +69,7 @@ const App = props => {
     fetch(`/api/grades/${gradeId}`, {
       method: 'DELETE'
     })
-      .then(response => {
+      .then(() => {
         const newArray = [...grades];
         const indexMatch = newArray.findIndex(object => object.gradeId === gradeId);
         newArray.splice(indexMatch, 1);
@@ -94,37 +95,38 @@ const App = props => {
     if (arrayOfGrades.length > 0) {
       return Math.round(arrayOfGrades.reduce((a, b) => a + b, 0) / arrayOfGrades.length);
     } else {
-      return 'N/A';
+      return '0';
     }
   };
 
   const isFirstUpdate = React.useRef(true);
   useEffect(() => {
-    if (isFirstUpdate.current) {
+    if (isFirstUpdate.current && signedIn) {
       isFirstUpdate.current = false;
       getNames();
     }
   }
   );
 
-  // componentDidMount() {
-  // }
-
   const isUserSignedIn = () => {
     if (signedIn) {
       const average = getAverageGrade();
       return (
-        <div className="m-1 m-md-3 container-fluid ">
-          <Header text="Student Grade Table" grade={average} />
-          <div className="row container-fluid justify-content-center ">
-            <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
-            <GradeForm submit={addNames} foundObj={objToPass} />
+        <div className="grade-table-background">
+          <div className="p-1 p-md-3 container-fluid ">
+            <Header text="Student Grade Table" grade={average} />
+            <div className="row container-fluid justify-content-center ">
+              <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
+              <GradeForm submit={addNames} foundObj={objToPass} />
+            </div>
           </div>
         </div>
+
       );
+    } else {
+      return <Authentication userSignedIn={userSignedIn} />;
     }
   };
-  return isUserSignedIn();
-};
 
-export default App;
+  return isUserSignedIn();
+}

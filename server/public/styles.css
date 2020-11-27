@@ -1,7 +1,25 @@
+body {
+  margin: 0;
+}
+
 .border-2{
 border-style:solid!important;
  border-width: 2px!important;
  border-color: black!important;
+}
+
+.login-gradient{
+  height: 100vh;
+  background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+}
+
+.grade-table-background {
+  height: 100vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
+
+.showError{
+  display: block;
 }
 
 .fontInBetween{
