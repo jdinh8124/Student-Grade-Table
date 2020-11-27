@@ -19,7 +19,7 @@ const Authentication = props => {
     } else if (view === 'signUp') {
       return <SignUp userSignedIn={props.userSignedIn} goBack={() => setAccountView('welcome')}/>;
     } else if (view === 'signIn') {
-      return <SignIn />;
+      return <SignIn userSignedIn={props.userSignedIn} goBack={() => setAccountView('welcome')} />;
     } else {
       props.userSignedIn(true);
     }
