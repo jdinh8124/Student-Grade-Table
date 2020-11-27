@@ -55,7 +55,7 @@ const SignUp = props => {
   const isUserFieldsEmpty = () => {
     if (emptyFields) {
       return (
-        <div className="invalid-feedback showError mb-3 warningDiv">
+        <div className="text-white invalid-feedback showError mb-3 warningDiv">
             You Have Empty Fields
         </div>
       );
@@ -65,7 +65,7 @@ const SignUp = props => {
   const isUserNameValid = () => {
     if (duplicateUsername) {
       return (
-        <div className="invalid-feedback showError mb-3 warningDiv">
+        <div className="text-white invalid-feedback showError mb-3 warningDiv">
               Your Username You Selected Was Taken
         </div>
       );
@@ -75,7 +75,7 @@ const SignUp = props => {
   const passWordsDoNotMatch = () => {
     if (passwordsDoNotMatch) {
       return (
-        <div className="invalid-feedback showError mb-3 warningDiv">
+        <div className="text-white invalid-feedback showError mb-3 warningDiv">
               Your Passwords Do Not Match
         </div>
       );
@@ -85,7 +85,7 @@ const SignUp = props => {
   const isThereAnEmailError = () => {
     if (emailError) {
       return (
-        <div className="invalid-feedback showError mb-3 warningDiv">
+        <div className="text-white invalid-feedback showError mb-3 warningDiv">
               Your Email Was Not Valid
         </div>
       );
@@ -94,7 +94,7 @@ const SignUp = props => {
 
   return (
     <div className="login-gradient d-flex flex-column  align-items-center h-100vh justify-content-center ">
-      <h1 className="purple-font">Create Account</h1>
+      <h1 className="text-white">Create Account</h1>
       <form className="d-flex align-items-center flex-column">
         <div className="input-group flex-nowrap mb-3 signup-input">
           <div className="input-group-prepend">
@@ -127,8 +127,8 @@ const SignUp = props => {
         {passWordsDoNotMatch()}
         {isUserFieldsEmpty()}
         <div>
-          <button onClick={props.goBack} className="btn btn-secondary  mr-3">Go Back</button>
-          <button onClick={createAccount} className="btn btn-success ">Submit</button>
+          <button onClick={props.goBack} className="btn btn-secondary mr-3">Go Back</button>
+          <button onClick={createAccount} className="btn btn-success">Submit</button>
         </div>
       </form>
     </div>

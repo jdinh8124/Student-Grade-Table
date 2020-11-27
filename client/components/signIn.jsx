@@ -9,7 +9,7 @@ const SignIn = props => {
   const isUserNameValid = () => {
     if (wrongUsername) {
       return (
-        <div className="invalid-feedback showError">
+        <div className="text-white invalid-feedback showError">
           Your Username or Password Was Incorrect
         </div>
       );
@@ -19,7 +19,7 @@ const SignIn = props => {
   const isUserFieldsEmpty = () => {
     if (emptyFields) {
       return (
-        <div className="invalid-feedback showError mb-3 warningDiv">
+        <div className="text-white invalid-feedback showError mb-3 warningDiv">
           You Have Empty Fields
         </div>
       );
@@ -61,7 +61,7 @@ const SignIn = props => {
 
   return (
     <div className="login-gradient d-flex flex-column  align-items-center h-100vh justify-content-center">
-      <h1 className="purple-font">Sign In</h1>
+      <h1 className="text-white">Sign In</h1>
       <form className="d-flex align-items-center flex-column" >
         {isUserNameValid()}
         <div className="input-group flex-nowrap mb-3 signup-input">
@@ -78,8 +78,8 @@ const SignIn = props => {
         </div>
         {isUserFieldsEmpty()}
         <div>
-          <button onClick={props.goBack} className="btn btn-outline-secondary d-inline mr-3">Go Back</button>
-          <button onClick={checkAccount} className="btn text-light blue-purple-gradient d-inline">Sign In</button>
+          <button onClick={props.goBack} className="btn btn-secondary mr-3">Go Back</button>
+          <button onClick={checkAccount} className="btn btn-success">Sign In</button>
         </div>
       </form>
     </div>
