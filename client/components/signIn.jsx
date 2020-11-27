@@ -19,7 +19,7 @@ const SignIn = props => {
   const isUserFieldsEmpty = () => {
     if (emptyFields) {
       return (
-        <div className="text-white invalid-feedback showError mb-3 warningDiv">
+        <div className="text-white invalid-feedback showError mb-3 pt-0 warningDiv">
           You Have Empty Fields
         </div>
       );
@@ -45,6 +45,7 @@ const SignIn = props => {
       body: JSON.stringify(newObj)
     })
       .then(response => {
+        console.log(response);
         if (response.status === 200) {
           return response.json();
         } else {
@@ -63,19 +64,19 @@ const SignIn = props => {
     <div className="login-gradient d-flex flex-column  align-items-center h-100vh justify-content-center">
       <h1 className="text-white">Sign In</h1>
       <form className="d-flex align-items-center flex-column" >
-        {isUserNameValid()}
         <div className="input-group flex-nowrap mb-3 signup-input">
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-user"></i></span>
           </div>
           <input onChange={inputChangeEvent => setUserName(inputChangeEvent.target.value)} className="form-control" placeholder="Username" />
         </div>
-        <div className="input-group flex-nowrap mb-3 signup-input">
+        <div className="input-group flex-nowrap mb-2 signup-input">
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-lock"></i></span>
           </div>
           <input type="password" name="password" autoComplete="on" onChange={inputChangeEvent => setPassword(inputChangeEvent.target.value)} className="form-control" placeholder="Password" />
         </div>
+        {isUserNameValid()}
         {isUserFieldsEmpty()}
         <div>
           <button onClick={props.goBack} className="btn btn-secondary mr-3">Go Back</button>

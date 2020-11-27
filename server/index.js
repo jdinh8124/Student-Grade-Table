@@ -100,10 +100,10 @@ app.delete('/api/grades/:gradeId', (req, res) => {
 });
 
 app.post('/api/auth/signup', (req, res, next) => {
-  bcrypt.hash(req.body.userPwd, 10, function (err, hash) {
+  bcrypt.hash(req.body.userPassword, 10, function (err, hash) {
     console.error(err);
     const sql = `
-    insert into "user"("userName", "email", "userPwd")
+    insert into "user"("userName", "email", "userPassword")
     values ($1, $2, $3)
     returning "userName";
     `;
@@ -123,7 +123,7 @@ app.post('/api/auth/signup', (req, res, next) => {
 
 app.post('/api/auth/login', (req, res, next) => {
   const userSql = `
-    select "userPwd"
+    select "userPassword"
       from "user"
      where "userName" = $1;
     `;
@@ -135,7 +135,8 @@ app.post('/api/auth/login', (req, res, next) => {
   const userValues = [req.body.userName];
   db.query(userSql, userValues)
     .then(result => {
-      bcrypt.compare(req.body.userPwd, result.rows[0].userPwd, (err, comResult) => {
+      console.log(req.body, result);
+      bcrypt.compare(req.body.userPassword, result.rows[0].userPassword, (err, comResult) => {
         console.error(err);
         if (comResult) {
           db.query(getUserIdSql, userValues)

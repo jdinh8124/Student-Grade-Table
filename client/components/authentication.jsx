@@ -8,7 +8,7 @@ const Authentication = props => {
   const welcomeRender = () => {
     if (view === 'welcome') {
       return (<div className="login-gradient d-flex flex-column align-items-center justify-content-center">
-        <h1 className="text-white">Teacher Portal</h1>
+        <h1 className="text-white">Teacher Portal <i className="fas fa-chalkboard-teacher"></i></h1>
         <div>
           <button className="btn btn-outline-light m-2 btn-lg" onClick={() => setAccountView('signUp')}>Sign Up</button>
           <button className="btn btn-outline-light m-2 btn-lg" onClick={() => setAccountView('signIn')}>Log In</button>

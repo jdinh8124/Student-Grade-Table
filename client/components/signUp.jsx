@@ -118,7 +118,7 @@ const SignUp = props => {
           <input type="password" name="password" autoComplete="on" onChange={inputChangeEvent => setPassword(inputChangeEvent.target.value)} className="form-control" placeholder="Password" />
         </div>
 
-        <div className="input-group flex-nowrap mb-3 signup-input">
+        <div className="input-group flex-nowrap mb-2 signup-input">
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-lock"></i></span>
           </div>
