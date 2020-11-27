@@ -10,27 +10,8 @@ const SignUp = props => {
   const [emailError, setEmailError] = React.useState(false);
   const [emptyFields, setEmptyFields] = React.useState(false);
 
-  const userNameChange = event => {
-    setUserName(event.target.value);
-    if (duplicateUsername) {
-      setDuplicateUsername(true);
-    }
-  };
-
-  const emailChange = event => {
-    setEmail(event.target.value);
-  };
-
-  const passwordChange = event => {
-    setPassword(event.target.value);
-  };
-
-  const confirmationPasswordChange = event => {
-    setconfirmationPassword(event.target.value);
-  };
-
-  const createAccount = event => {
-    event.preventDefault();
+  const createAccount = submitEvent => {
+    submitEvent.preventDefault();
     if (userPassword === '' || confirmationPassword === '' || userName === '' || email === '') {
       setEmptyFields(true);
       return;
@@ -119,7 +100,7 @@ const SignUp = props => {
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-user"></i></span>
           </div>
-          <input onChange={userNameChange} className="form-control" placeholder="Username" />
+          <input onChange={inputChangeEvent => setUserName(inputChangeEvent.target.value)} className="form-control" placeholder="Username" />
         </div>
 
         {isUserNameValid()}
@@ -127,26 +108,26 @@ const SignUp = props => {
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-envelope"></i></span>
           </div>
-          <input onChange={emailChange} className="form-control" placeholder="Email" />
+          <input onChange={inputChangeEvent => setEmail(inputChangeEvent.target.value)} className="form-control" placeholder="Email" />
         </div>
         {isThereAnEmailError()}
         <div className="input-group flex-nowrap mb-3 signup-input">
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-lock"></i></span>
           </div>
-          <input type="password" name="password" autoComplete="on" onChange={passwordChange} className="form-control" placeholder="Password" />
+          <input type="password" name="password" autoComplete="on" onChange={inputChangeEvent => setPassword(inputChangeEvent.target.value)} className="form-control" placeholder="Password" />
         </div>
 
         <div className="input-group flex-nowrap mb-3 signup-input">
           <div className="input-group-prepend">
             <span className="input-group-text" id="addon-wrapping"><i className="fas fa-lock"></i></span>
           </div>
-          <input type="password" name="password" autoComplete="on" onChange={confirmationPasswordChange} className="form-control" placeholder="Confirm Password" />
+          <input type="password" name="password" autoComplete="on" onChange={inputChangeEvent => setconfirmationPassword(inputChangeEvent.target.value)} className="form-control" placeholder="Confirm Password" />
         </div>
         {passWordsDoNotMatch()}
         {isUserFieldsEmpty()}
         <div>
-          <button onClick={props.back} className="btn btn-secondary  mr-3">Go Back</button>
+          <button onClick={props.goBack} className="btn btn-secondary  mr-3">Go Back</button>
           <button onClick={createAccount} className="btn btn-success ">Submit</button>
         </div>
       </form>

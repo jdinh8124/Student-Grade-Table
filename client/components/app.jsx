@@ -112,13 +112,16 @@ export default function App() {
     if (signedIn) {
       const average = getAverageGrade();
       return (
-        <div className="m-1 m-md-3 container-fluid ">
-          <Header text="Student Grade Table" grade={average} />
-          <div className="row container-fluid justify-content-center ">
-            <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
-            <GradeForm submit={addNames} foundObj={objToPass} />
+        <div className="grade-table-background">
+          <div className="p-1 p-md-3 container-fluid ">
+            <Header text="Student Grade Table" grade={average} />
+            <div className="row container-fluid justify-content-center ">
+              <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
+              <GradeForm submit={addNames} foundObj={objToPass} />
+            </div>
           </div>
         </div>
+
       );
     } else {
       return <Authentication userSignedIn={userSignedIn} />;
