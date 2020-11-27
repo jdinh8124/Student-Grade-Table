@@ -6,7 +6,7 @@ const GradeTable = props => {
     return <Grade name={student.name} course={student.course} grade={student.grade} key={student.gradeId} gradeId={student.gradeId} buttonClick={props.remove} updateClick={props.update}/>;
   });
   return (
-    <table className="table table-striped w-75">
+    <table className="table table-striped col-9">
       <thead className="thead-dark">
         <tr>
           <th scope="col">Name</th>

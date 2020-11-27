@@ -115,7 +115,7 @@ export default function App() {
         <div className="grade-table-background">
           <div className="p-1 p-md-3 container-fluid ">
             <Header text="Student Grade Table" grade={average} />
-            <div className="row container-fluid justify-content-center ">
+            <div className="row container-fluid justify-content-center no-gutters">
               <GradeTable grades={grades} remove={deleteNames} update={updateNames} />
               <GradeForm submit={addNames} foundObj={objToPass} />
             </div>

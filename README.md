@@ -68,5 +68,5 @@ https://localhost:3000
 5. Enjoy and make sure this is just an example site!
 
 ## Live Demo
-![Student Grade Table](sgtColor.gif)
 ![Student Grade Table Login](sgtColor2.gif)
+![Student Grade Table](sgtColor.gif)
