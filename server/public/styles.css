@@ -4,6 +4,11 @@ border-style:solid!important;
  border-color: black!important;
 }
 
+.login-gradient{
+  height: 100vh;
+  background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+}
+
 .fontInBetween{
   font-size: 2rem;
 }
