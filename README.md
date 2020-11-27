@@ -9,29 +9,35 @@
 ## Live Demo 
 Link: https://student-grade-table.jamestdinh.com/
 
-## Languages Used
+## Languages & Technologies Used
 - React.js
 - JavaScript (ES5 & ES6)
 - NodeJS
 - PostgreSQL
+- Bootstrap
 - HTML5
 - CSS3
+- AWS EC2
+- Ubuntu
+- Nginx
 
 ## Features
 - Users can add student grades
 - Users can delete grades
 - Users can update student information
+- User can create an account
+- User can sign into account
+- User can try out application in guest mode
 
 ## Planned Additions
 - Different themes
 - Multiple Classes
-- Teacher Login screen with a button for guest
-- bcrypt addition you sign in
 
 ## Takeaways
 - The power of react and passing props making the UI more efficent
 - I believe that React makes writing our node backend a lot easier
 - Bootstrap makes css and media queries a lot easier 
+- The bcrypt package mades handling passwords a lot easier 
 
 ## Getting Started
 
