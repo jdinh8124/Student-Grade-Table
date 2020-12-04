@@ -37,7 +37,7 @@ Link: https://student-grade-table.jamestdinh.com/
 - The power of react and passing props making the UI more efficent
 - I believe that React makes writing our node backend a lot easier
 - Bootstrap makes css and media queries a lot easier 
-- The bcrypt package mades handling passwords a lot easier 
+- The bcrypt package makes handling passwords a lot easier 
 
 ## Getting Started
 
